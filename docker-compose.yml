@@ -1,0 +1,98 @@
+version: '3'
+services:
+  plex:
+    image: linuxserver/plex
+    container_name: plex
+    restart: unless-stopped
+    network_mode: host
+
+    volumes:
+      - $PWD/plex/config:/config
+      - $PWD/plex/transcode:/transcode
+      - /mnt/media1/:/media
+    environment:
+      - TZ=Europe/London
+      - PLEX_UID=1000
+      - PLEX_GUID=1000
+
+  qbittorrent:
+    image: linuxserver/qbittorrent
+    container_name: qbittorrent
+    restart: unless-stopped
+    ports:
+      - 8081:8081
+
+    volumes:
+      - $PWD/qbittorrent:/config
+      - /mnt/media1/00000-To-Sort/:/downloads
+
+    environment:
+      - TZ=Europe/London
+      - PGID=1000
+      - PUID=1000
+      - WEBUI_PORT=8081
+
+  jackett:
+    image: linuxserver/jackett
+    container_name: jackett
+    restart: unless-stopped
+
+    ports:
+      - 9117:9117
+
+    volumes:
+      - $PWD/jackett:/config
+
+    environment:
+      - TZ=Europe/London
+      - PGID=1000
+      - PUID=1000
+
+  radarr:
+    image: linuxserver/radarr
+    container_name: radarr
+    restart: unless-stopped
+
+    ports:
+      - 7878:7878
+
+    volumes:
+      - $PWD/radarr:/config
+      - /mnt/media1/00000-To-Sort/:/downloads
+      - /mnt/media1/Movies/:/movies
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/London
+
+  sonarr:
+    image: linuxserver/sonarr
+    container_name: sonarr
+    restart: unless-stopped
+
+    ports:
+      - 8989:8989
+    volumes:
+      - $PWD/sonarr:/config
+      - /mnt/media1/00000-To-Sort/:/downloads
+      - /mnt/media1/TV/:/tv
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/London
+
+  lidarr:
+    image: linuxserver/lidarr
+    container_name: lidarr
+    restart: unless-stopped
+
+    ports:
+      - 8686:8686
+    volumes:
+      - $PWD/lidarr:/config
+      - /mnt/media1/00000-To-Sort/:/downloads
+      - /mnt/media1/Music:/music
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/London
