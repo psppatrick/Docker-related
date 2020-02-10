@@ -7,8 +7,8 @@ services:
     network_mode: host
 
     volumes:
-      - $PWD/configs/plex/config:/config
-      - $PWD/plex/transcode:/transcode
+      - /home/patrick/configs/plex/config:/config
+      - /home/patrick/configs/plex/transcode:/transcode
       - /mnt/media1/:/media
     environment:
       - TZ=Europe/London
@@ -23,7 +23,7 @@ services:
       - 8081:8081
 
     volumes:
-      - $PWD/configs/qbittorrent:/config
+      - /home/patrick/configs/qbittorrent:/config
       - /mnt/media1/00000-To-Sort/:/downloads
 
     environment:
@@ -41,7 +41,7 @@ services:
       - 9117:9117
 
     volumes:
-      - $PWD/configs/jackett:/config
+      - /home/patrick/configs/jackett:/config
 
     environment:
       - TZ=Europe/London
@@ -57,7 +57,7 @@ services:
       - 7878:7878
 
     volumes:
-      - $PWD/configs/radarr:/config
+      - /home/patrick/configs/radarr:/config
       - /mnt/media1/00000-To-Sort/:/downloads
       - /mnt/media1/Movies/:/movies
     environment:
@@ -73,7 +73,7 @@ services:
     ports:
       - 8989:8989
     volumes:
-      - $PWD/configs/sonarr:/config
+      - /home/patrick/configs/sonarr:/config
       - /mnt/media1/00000-To-Sort/:/downloads
       - /mnt/media1/TV/:/tv
     environment:
@@ -89,7 +89,7 @@ services:
     ports:
       - 8686:8686
     volumes:
-      - $PWD/configs/lidarr:/config
+      - /home/patrick/configs/lidarr:/config
       - /mnt/media1/00000-To-Sort/:/downloads
       - /mnt/media1/Music:/music
     environment:
